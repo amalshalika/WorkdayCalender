@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2008
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ti.Poc.Calendar", "WorkdayCalender\Ti.Poc.Calendar.csproj", "{3D69B7B0-53D1-4CCB-876D-CF540E331A20}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ti.Poc.Calendar.Test", "Ti.Poc.Calendar.Test\Ti.Poc.Calendar.Test.csproj", "{C7332ABC-DD92-44C6-AD3A-B83CCAB37B8A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3D69B7B0-53D1-4CCB-876D-CF540E331A20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D69B7B0-53D1-4CCB-876D-CF540E331A20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D69B7B0-53D1-4CCB-876D-CF540E331A20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D69B7B0-53D1-4CCB-876D-CF540E331A20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7332ABC-DD92-44C6-AD3A-B83CCAB37B8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7332ABC-DD92-44C6-AD3A-B83CCAB37B8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7332ABC-DD92-44C6-AD3A-B83CCAB37B8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7332ABC-DD92-44C6-AD3A-B83CCAB37B8A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3A080634-668E-4E6B-99F6-BC73FFD4F993}
+	EndGlobalSection
+EndGlobal
