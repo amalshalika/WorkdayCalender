@@ -31,41 +31,66 @@ namespace Ti.Poc.Calendar
         }
         private DateTime TuneWorkingDayByFractional(DateTime startDate, double fractionalIncrement)
         {
-            var planingStartTime = CountFractionalPartAsDateTime(Math.Abs(fractionalIncrement));
+            var planingStartTime = CountFractionalPartAsTime(Math.Abs(fractionalIncrement));
 
+            if(isBackwardMove)
+            {
+                return TuneWorkingDayStartTimeForBackwardMove(startDate, planingStartTime);
+            }
+            else
+            {
+                return TuneWorkingDayStartTimeForForwardMove(startDate, planingStartTime);
+            }
+
+        }
+
+        public DateTime TuneWorkingDayStartTimeForForwardMove(DateTime startDate, TimeSpan ajustment)
+        {
             if (startDate.TimeOfDay <= startTimeOfDay)
             {
                 startDate = InitilizeStartTimeOfWorkingDay(startDate);
-                if (isBackwardMove)
-                {
-                    return TuneWorkingDayByDays(startDate, -1, true) - planingStartTime;
-                }
-                return startDate + planingStartTime;
+                return startDate + ajustment;
             }
             else if (startDate.TimeOfDay >= endTimeOfDay)
             {
                 startDate = InitilizeStartTimeOfWorkingDay(startDate);
-                if (isBackwardMove)
-                {
-                    return startDate - planingStartTime;
-                }
-                return TuneWorkingDayByDays(startDate, 1, true) + (planingStartTime);
+                return TuneWorkingDayByDays(startDate, 1, true) + ajustment;
             }
 
-            var remainWorkingTimeOfDay = CountRemainWorkingTimeFromStartTime(startDate);
-            if (remainWorkingTimeOfDay >= planingStartTime)
+            var remainWorkingTimeOfDay = CountRemainWorkingTimeOfDay(startDate);
+            if (remainWorkingTimeOfDay >= ajustment)
             {
-                return isBackwardMove ? startDate - planingStartTime : startDate + planingStartTime;
+                return startDate + ajustment;
             }
 
-            var timeCarryToNextDay = planingStartTime - remainWorkingTimeOfDay;
-            if (isBackwardMove)
-            {
-                return TuneWorkingDayByDays(InitilizeStartTimeOfWorkingDay(startDate), -1, true) - timeCarryToNextDay;
-            }
+            var timeCarryToNextDay = ajustment - remainWorkingTimeOfDay;
+
             return TuneWorkingDayByDays(InitilizeStartTimeOfWorkingDay(startDate), 1, true) + timeCarryToNextDay;
         }
-        private TimeSpan CountRemainWorkingTimeFromStartTime(DateTime startDate)
+
+        public DateTime TuneWorkingDayStartTimeForBackwardMove(DateTime startDate, TimeSpan ajustment)
+        {
+            if (startDate.TimeOfDay <= startTimeOfDay)
+            {
+                startDate = InitilizeStartTimeOfWorkingDay(startDate);
+                return TuneWorkingDayByDays(startDate, -1, true) - ajustment;
+            }
+            else if (startDate.TimeOfDay >= endTimeOfDay)
+            {
+                startDate = InitilizeStartTimeOfWorkingDay(startDate);
+                return startDate - ajustment;
+            }
+
+            var remainWorkingTimeOfDay = CountRemainWorkingTimeOfDay(startDate);
+            if (remainWorkingTimeOfDay >= ajustment)
+            {
+                return startDate - ajustment;
+            }
+
+            var timeCarryToNextDay = ajustment - remainWorkingTimeOfDay;
+            return TuneWorkingDayByDays(InitilizeStartTimeOfWorkingDay(startDate), -1, true) - timeCarryToNextDay;
+        }
+        private TimeSpan CountRemainWorkingTimeOfDay(DateTime startDate)
         {
             return isBackwardMove ? startDate.TimeOfDay - startTimeOfDay : endTimeOfDay - startDate.TimeOfDay;
         }
@@ -73,7 +98,7 @@ namespace Ti.Poc.Calendar
         {
             return isBackwardMove ? startDate.Date.Add(endTimeOfDay) : startDate.Date.Add(startTimeOfDay);
         }
-        private TimeSpan CountFractionalPartAsDateTime(double fractionalIncrement)
+        private TimeSpan CountFractionalPartAsTime(double fractionalIncrement)
         {
             double hoursDiff = (endTimeOfDay - startTimeOfDay).TotalHours;
             var workingHours = fractionalIncrement * hoursDiff;
