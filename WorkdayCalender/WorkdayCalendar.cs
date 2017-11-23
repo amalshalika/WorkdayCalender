@@ -21,7 +21,7 @@ namespace Ti.Poc.Calendar
 
             if (IsInWeekendOrHoliday(startDate))
             {
-                startDate = AdjustDateByHolidayAndWeekend(InitilizeStartTimeOfWorkingDay(startDate));
+                startDate = AdjustDateForHolidayAndWeekend(InitilizeStartTimeOfWorkingDay(startDate));
             }
             var fractionalDistance = distance - Math.Truncate(distance);
             var planingWorkingDay = TuneWorkingDayByFractional(startDate, fractionalDistance);
@@ -43,7 +43,6 @@ namespace Ti.Poc.Calendar
             }
 
         }
-
         public DateTime TuneWorkingDayStartTimeForForwardMove(DateTime startDate, TimeSpan ajustment)
         {
             if (startDate.TimeOfDay <= startTimeOfDay)
@@ -110,18 +109,18 @@ namespace Ti.Poc.Calendar
             var dayToMove = isBackwardMove ? -1 : 1;
             for (int i = 0; i < Math.Abs(days); i++)
             {
-                startDate = incrementByDay ? AdjustDateByHolidayAndWeekend(startDate.AddDays(dayToMove)) : TuneWorkingDayByFractional(startDate, dayToMove);
+                startDate = incrementByDay ? AdjustDateForHolidayAndWeekend(startDate.AddDays(dayToMove)) : TuneWorkingDayByFractional(startDate, dayToMove);
             }
             return startDate;
         }
-        private DateTime AdjustDateByHolidayAndWeekend(DateTime startDate)
+        private DateTime AdjustDateForHolidayAndWeekend(DateTime startDate)
         {
             var dayToMove = isBackwardMove ? -1 : 1;
 
             if (IsInWeekendOrHoliday(startDate))
             {
                 var dayToChange = startDate.AddDays(dayToMove);
-                return AdjustDateByHolidayAndWeekend(dayToChange);
+                return AdjustDateForHolidayAndWeekend(dayToChange);
             }
             return startDate;
         }

@@ -113,32 +113,6 @@ namespace Ti.Poc.Calendar.Test
             var incrementResult = workdayCalendar.GetWorkdayIncrement(startDate, -0.63258);
             Assert.AreEqual(startDate.AddDays(-1).Date.Add(new TimeSpan(13, 52, 0)).AsNumber(), incrementResult.AsNumber());
         }
-
-        [TestMethod]
-        public void MoveBackWithTimes123()
-        {
-            var startDate = new DateTime(2015, 01, 12, 10, 55, 0);
-            startDate = startDate.StartOfWeek(DayOfWeek.Wednesday);
-            var incrementResult = workdayCalendar.GetWorkdayIncrement(startDate, 400);
-            Assert.AreEqual(new DateTime(2016, 7, 20, 10, 55, 0).AsNumber(), incrementResult.AsNumber());
-        }
-
-        [TestMethod]
-        public void Test123()
-        {
-            var workdayCalendar = new WorkdayCalendar();
-            workdayCalendar.SetWorkDayStartAndStop(new TimeSpan(8, 0, 0), new TimeSpan(16, 0, 0));
-            workdayCalendar.SetHoliday(new DateTime(2004, 5, 17, 0, 0, 0), true);
-            workdayCalendar.SetHoliday(new DateTime(2004, 5, 24, 0, 0, 0), true);
-            workdayCalendar.SetHoliday(new DateTime(2004, 5, 27, 0, 0, 0), false);
-
-            var start = new DateTime(2004, 5, 24, 18, 3, 0);
-            double increment = -6.7470217d;
-
-            var actual = workdayCalendar.GetWorkdayIncrement(start, increment);
-            var expected = new DateTime(2004, 5, 12, 10, 2, 0);
-            Assert.AreEqual(actual,expected);
-        }
     }
 
     public static class DateTimeExtensions
